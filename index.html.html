@@ -1,0 +1,33 @@
+
+<html>
+<head>
+<meta charset="utf-8">
+<title>心理痛苦计算器</title>
+</head>
+<body>
+<h3>中青年AMI患者心理痛苦风险计算器</h3>
+病程(0=<3月,1=3-6月,2=6-12月,3=≥1年): <input id="bc"><br>
+年龄: <input id="age"><br>
+SSRS得分: <input id="ssrs"><br>
+BIPQ得分: <input id="bipq"><br>
+MCMQ屈服维度得分: <input id="mcmq"><br>
+<button onclick="calc()">计算</button>
+<div id="res"></div>
+
+<script>
+function calc(){
+  let bc=+document.getElementById("bc").value;
+  let age=+document.getElementById("age").value;
+  let ssrs=+document.getElementById("ssrs").value;
+  let bipq=+document.getElementById("bipq").value;
+  let mcmq=+document.getElementById("mcmq").value;
+
+  // 你的模型公式
+  let lp = -1.6805089 + (bc==3?-0.72574198:0) + (bc==1?0.17333819:0) + (bc==2?0.45712032:0) + age*-0.06517875 + ssrs*-0.04882217 + bipq*0.12276656 + mcmq*0.21679046;
+  let p=1/(1+Math.exp(-lp));
+  document.getElementById("res").innerHTML = "Pr(心理痛苦) = " + p.toFixed(4) + " (" + (p*100).toFixed(2) + "%)";
+}
+</script>
+</body>
+</html>
+
